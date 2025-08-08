@@ -35,12 +35,80 @@ MainWindow::~MainWindow()
 void MainWindow::handleButtons()
 {
     QPushButton *clickedBtn = qobject_cast<QPushButton*>(sender());
-    if (!clickedBtn)
-        return;
-
-    if (!clickedBtn->text().isEmpty())
-        return; // already clicked
-
     clickedBtn->setText(XorO ? "X" : "O");
     XorO = !XorO;
+}
+
+void MainWindow::checkWin()
+{
+    for (int i = 0;i < 3;++i)
+    {
+        // Rows
+        if (!mybtns[i][0]->text().isEmpty() &&
+            mybtns[i][0]->text() == mybtns[i][1]->text() &&
+            mybtns[i][1]->text() == mybtns[i][2]->text())
+        {
+            QMessageBox::information(this, "Game Over", mybtns[i][0]->text() + " wins!");
+            resetGame();
+            return;
+        }
+
+        // Columns
+        if (!mybtns[0][i]->text().isEmpty() &&
+            mybtns[0][i]->text() == mybtns[1][i]->text() &&
+            mybtns[1][i]->text() == mybtns[2][i]->text())
+        {
+            QMessageBox::information(this, "Game Over", mybtns[0][i]->text() + " wins!");
+            resetGame();
+            return;
+        }
+
+        // Diagonals
+        if (!mybtns[0][0]->text().isEmpty() &&
+            mybtns[0][0]->text() == mybtns[1][1]->text() &&
+            mybtns[1][1]->text() == mybtns[2][2]->text())
+        {
+            QMessageBox::information(this, "Game Over", mybtns[0][0]->text() + " wins!");
+            resetGame();
+            return;
+        }
+
+        if (!mybtns[0][2]->text().isEmpty() &&
+            mybtns[0][2]->text() == mybtns[1][1]->text() &&
+            mybtns[1][1]->text() == mybtns[2][0]->text())
+        {
+            QMessageBox::information(this, "Game Over", mybtns[0][2]->text() + " wins!");
+            resetGame();
+            return;
+        }
+
+        bool drawOnScreen = true;
+        for (int i = 0; i < 3 && drawOnScreen;i++)
+        {
+            for (int j = 0; j < 3 && drawOnScreen;j++)
+            {
+                if (mybtns[i][j]->text().isEmpty())
+                {
+                    drawOnScreen = false;
+                }
+            }
+        }
+
+        if (drawOnScreen)
+        {
+            QMessageBox::information(this,"Game over!","It's draw");
+        }
+    }
+}
+
+void MainWindow::resetGame()
+{
+    for (int i = 0; i < 3; ++i)
+    {
+        for (int j = 0; j < 3; ++j)
+        {
+            mybtns[i][j]->setText("");
+        }
+    }
+    XorO = true; // X starts again
 }

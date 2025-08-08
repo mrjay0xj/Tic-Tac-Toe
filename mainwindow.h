@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <QMessageBox>
 #include <QVector>
 #include <QString>
 
@@ -31,6 +32,8 @@ public:
 private:
     Ui::MainWindow *ui;
     void handleButtons();
+    void checkWin();
+    void resetGame();
 
 };
 #endif // MAINWINDOW_H
