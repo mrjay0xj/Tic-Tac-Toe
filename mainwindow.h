@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPushButton>
 #include <QVector>
 #include <QString>
 
@@ -23,9 +24,13 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    bool XorO; // turn the X or O to every state
+    QPushButton* mybtns[3][3];
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
+    void handleButtons();
+
 };
 #endif // MAINWINDOW_H
